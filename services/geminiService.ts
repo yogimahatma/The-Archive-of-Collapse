@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { CaseFormData } from "../types";
 
@@ -8,9 +9,9 @@ export const generateArchiveStory = async (formData: CaseFormData): Promise<Read
   const model = 'gemini-3-pro-preview';
   
   const prompt = `
-    You are an archivist compiling a forbidden case file.
+    You are an obsessive archivist and horror novelist compiling a forbidden case file.
     
-    TASK: Write a documentary-style horror story based on these sealed records.
+    TASK: Write a documentary-style horror NOVELLA based on these sealed records.
     
     Target Location: ${formData.location}
     Time Period (Origin): ${formData.era}
@@ -18,72 +19,70 @@ export const generateArchiveStory = async (formData: CaseFormData): Promise<Read
     
     OUTPUT LANGUAGE: ${formData.language} (The entire story must be written in ${formData.language}).
 
-    MANDATORY THEMATIC REQUIREMENTS:
-    1. Tone: Documentary YouTube horror narration style. Use "We" or second-person plural. Serious, investigative, melancholic.
-    2. Intro: Must explicitly state: "This is not folklore. This is not legend. This happened." near the beginning.
-    3. Theme: Obsession with a "pure bloodline" leading to extreme genetic isolation/inbreeding (described clinically, not erotically).
-    4. Theme: Progressive physical and biological abnormalities.
-    5. Theme: Government/Institutional cover-up.
-    6. Theme: Multigenerational tragedy.
-    7. Theme: Children as victims.
-
-    CRITICAL LENGTH INSTRUCTION (MINIMUM 4000 WORDS):
-    - THIS IS A STRICT REQUIREMENT. The total output must exceed 4000 words.
-    - Do not summarize. Expand every single scene. Describe the texture of the wood, the specific smell of the rot, the sound of the wind, the exact medical details of the deformities.
-    - Treat this as a complete novella. If you feel you are moving too fast, STOP and describe the environment.
+    CRITICAL INSTRUCTION: EXTREME LENGTH REQUIRED (MINIMUM 4000 WORDS)
+    - The user has complained that previous versions were too short.
+    - DO NOT SUMMARIZE. DO NOT SKIM OVER TIME PERIODS.
+    - If 50 years pass, do not say "50 years passed." Describe the changing of the seasons, the rotting of the wood, the specific births and deaths in between.
+    - You are paid by the word. The more detailed, the better.
+    - Describe smells, textures, temperatures, sounds, and specific medical symptoms in exhausting detail.
 
     STRUCTURE & FORMATTING:
     - You MUST divide the story into exactly 8 sections.
     - You MUST use the delimiter "|||SECTION|||" between each section.
     - Do NOT use subheadings (like ## Title) within the text blocks. Just pure narrative.
-    - Follow the word count goals for each section below strictly to hit the 4000 word total.
 
-    SECTION BREAKDOWN & GOALS:
+    SECTION BREAKDOWN & MICRO-TASKS (Follow these to ensure length):
 
-    1. Opening (Target: 400+ words)
-       - Describe the location (${formData.location}) as it stands today. The rot, the silence.
+    1. Opening (GOAL: 500 Words)
+       - Do not just describe the house. Describe the weeds choking the porch. Describe the specific type of dust on the windows.
+       - Describe the silence of the valley in a way that feels claustrophobic.
+       - Explicitly state: "This is not folklore. This is not legend. This happened."
        - End this section with |||SECTION|||
 
-    2. First generations (Target: 500+ words)
-       - How the clan formed in ${formData.era}.
-       - Detailed exploration of the Catalyst: ${formData.catalyst}.
-       - Why they locked the gates.
+    2. First generations (GOAL: 600 Words)
+       - Describe the arrival in ${formData.era}. The specific wagon or vehicle used.
+       - Detail the Catalyst (${formData.catalyst}) not as a summary, but as a specific scene with dialogue. What exactly was said?
+       - Describe the building of the farmhouse nail by nail.
        - End this section with |||SECTION|||
 
-    3. Rise of the closed bloodline (Target: 600+ words)
-       - The first few decades. Marriages within the family.
-       - The implementation of the "Rules".
-       - The first subtle genetic defects appearing (polydactyly, pale skin).
+    3. Rise of the closed bloodline (GOAL: 700 Words)
+       - Describe the first marriage within the family. The uneasy feeling of the ceremony.
+       - Describe the birth of the first child with a "minor" defect (polydactyly or pale skin). Describe the parents' reaction in dialogue.
+       - List the specific "Rules" of the farm.
        - End this section with |||SECTION|||
 
-    4. Descent (Target: 1200+ words) - ***MOST IMPORTANT SECTION***
-       - This is the horror core. Spend a long time here.
-       - Increasingly severe abnormalities. Describe specific characters/family members and their deformities.
-       - Social and cognitive decline. The loss of language.
-       - Growing fear and superstition.
+    4. Descent (GOAL: 1500 Words - THE CORE HORROR)
+       - THIS MUST BE THE LONGEST SECTION.
+       - Do not summarize the decline. Show us a specific dinner scene 30 years later.
+       - Describe the deformities medically: elongated limbs, translucent skin, extra joints. 
+       - Describe the loss of language. How do they communicate now? Grunts? Clicks?
+       - Include a "Journal Entry" or written record found on site that shows their madness.
+       - Describe the smell of the house.
        - End this section with |||SECTION|||
 
-    5. Intervention (Target: 500+ words)
-       - The arrival of outsiders (doctor, census taker, or lost hiker).
-       - What they saw. The shock.
-       - The violence or the tragic interaction.
+    5. Intervention (GOAL: 600 Words)
+       - An outsider arrives (Census taker, doctor, or hiker). Give this character a name and backstory.
+       - Describe their walk up the driveway.
+       - Describe the moment they make contact. The sheer horror of what they see.
+       - Describe the violence or the tragic interaction in slow motion.
        - End this section with |||SECTION|||
 
-    6. Cover-up (Target: 400+ words)
-       - Federal or institutional suppression.
-       - Men in suits arriving. burning the archives.
-       - Relocation of survivors to black-site hospitals.
+    6. Cover-up (GOAL: 500 Words)
+       - Officials arrive. Describe their uniforms/suits.
+       - Describe the process of scrubbing the house. The burning of photographs.
+       - Describe the relocation of the survivors to a specific facility (e.g., "Ward 4 at St. Jude's").
        - End this section with |||SECTION|||
 
-    7. Aftermath (Target: 300+ words)
-       - The land reclaimed by nature.
-       - Only farmhouse/cemetery/symbols remain.
-       - The silence of the valley now.
+    7. Aftermath (GOAL: 400 Words)
+       - Return to the present day.
+       - Nature has reclaimed the spot. Describe the moss, the trees growing through the floorboards.
+       - Describe the specific symbols left carved in the wood.
        - End this section with |||SECTION|||
 
-    8. Closing chill (Target: 200+ words)
-       - Hint that one or more descendants might still be alive.
-       - They are out there, carrying the bloodline.
+    8. Closing chill (GOAL: 300 Words)
+       - Reveal that the headcount didn't match the records.
+       - Suggest one survivor escaped.
+       - Where are they now? A crowded city? A subway station?
        - Final haunting sentence.
        - End this section with |||SECTION|||
   `;
@@ -93,11 +92,11 @@ export const generateArchiveStory = async (formData: CaseFormData): Promise<Read
       model: model,
       contents: prompt,
       config: {
-        systemInstruction: "You are an obsessive horror novelist and archivist who refuses to write short summaries. You are paid by the word. You must write EXTREMELY LONG, detailed, slow-burn descriptions.",
-        temperature: 0.8, // Slightly lowered to ensure it sticks to the length instructions without getting too derailed
+        systemInstruction: "You are a verbose, obsessive narrator who hates summarization. You describe every single detail. You never rush. Your goal is to write a masterpiece of slow-burn horror.",
+        temperature: 0.85,
         topK: 40,
         topP: 0.95,
-        maxOutputTokens: 8192, // Maximum allowed for high word count
+        maxOutputTokens: 8192,
       }
     });
 
